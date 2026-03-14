@@ -39,12 +39,7 @@ final class DashboardViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        do {
-            try await healthKitManager.requestAuthorization()
-        } catch {
-            errorMessage = "Could not request HealthKit authorization."
-        }
-
+        // Load synthetic demo data
         await healthKitManager.fetchAllData(from: startDate, to: endDate)
 
         // Detect cycles
@@ -70,7 +65,7 @@ final class DashboardViewModel: ObservableObject {
     private func generateInsights() async {
         // Try Claude API first, fall back to templates
         do {
-            let symptomSummary: [(type: String, avgSeverity: Double, count: Int)] = [] // populated from SwiftData in view
+            let symptomSummary: [(type: String, avgSeverity: Double, count: Int)] = []
             let response = try await ClaudeInsightService.shared.generateInsights(
                 correlations: correlations,
                 cycleLengths: cycleLengths,
@@ -79,7 +74,6 @@ final class DashboardViewModel: ObservableObject {
             )
             insightCards = response.dashboardCards
         } catch {
-            // Fallback to template-based insights
             let fallback = ClaudeInsightService.templateInsights(
                 correlations: correlations,
                 cycleLengths: cycleLengths

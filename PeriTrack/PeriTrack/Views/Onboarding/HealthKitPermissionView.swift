@@ -2,23 +2,21 @@ import SwiftUI
 
 struct HealthKitPermissionView: View {
     var onComplete: () -> Void
-    @State private var isRequesting = false
-    @State private var showError = false
 
     var body: some View {
         VStack(spacing: 32) {
             Spacer()
 
-            Image(systemName: "heart.circle.fill")
+            Image(systemName: "chart.line.uptrend.xyaxis.circle.fill")
                 .font(.system(size: 80))
-                .foregroundStyle(ColorPalette.coral)
+                .foregroundStyle(ColorPalette.primary)
 
             VStack(spacing: 12) {
-                Text("Health Data Access")
+                Text("You're All Set")
                     .font(AppFonts.title)
                     .foregroundColor(ColorPalette.primaryDark)
 
-                Text("PeriPero reads your health data to detect patterns. Your data stays on your device.")
+                Text("PeriPero is loaded with sample health data so you can explore the full experience right away.")
                     .font(AppFonts.body())
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -26,16 +24,14 @@ struct HealthKitPermissionView: View {
             }
 
             VStack(alignment: .leading, spacing: 12) {
-                dataTypeRow("Menstrual cycles & flow")
-                dataTypeRow("Sleep analysis")
-                dataTypeRow("Heart rate & HRV")
-                dataTypeRow("Basal body temperature")
-                dataTypeRow("Step count")
-                dataTypeRow("Body mass")
+                dataTypeRow("90 days of cycle, sleep & heart data")
+                dataTypeRow("Correlation detection across symptoms")
+                dataTypeRow("AI-powered advocacy reports")
+                dataTypeRow("Manual symptom logging")
             }
             .padding(.horizontal, 40)
 
-            Text("PeriPero only reads data — it never writes to Apple Health.")
+            Text("With a paid Apple Developer account, PeriPero can connect to real Apple Health data.")
                 .font(AppFonts.caption())
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -43,65 +39,27 @@ struct HealthKitPermissionView: View {
 
             Spacer()
 
-            VStack(spacing: 12) {
-                Button(action: requestPermission) {
-                    HStack {
-                        if isRequesting {
-                            ProgressView()
-                                .tint(.white)
-                        }
-                        Text("Allow Health Access")
-                    }
+            Button(action: onComplete) {
+                Text("Start Exploring")
                     .font(AppFonts.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(ColorPalette.primary)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
-                }
-                .disabled(isRequesting)
-
-                Button("Skip for Now") {
-                    onComplete()
-                }
-                .font(AppFonts.subheadline)
-                .foregroundColor(.secondary)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
         }
         .background(ColorPalette.background)
-        .alert("Could not request access", isPresented: $showError) {
-            Button("Continue Anyway") { onComplete() }
-        } message: {
-            Text("You can enable Health access later in Settings > Privacy & Security > Health > PeriPero.")
-        }
     }
 
     private func dataTypeRow(_ text: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(ColorPalette.primary)
+                .foregroundColor(ColorPalette.highlight)
             Text(text)
                 .font(AppFonts.subheadline)
-        }
-    }
-
-    private func requestPermission() {
-        isRequesting = true
-        Task {
-            do {
-                try await HealthKitManager.shared.requestAuthorization()
-                await MainActor.run {
-                    isRequesting = false
-                    onComplete()
-                }
-            } catch {
-                await MainActor.run {
-                    isRequesting = false
-                    showError = true
-                }
-            }
         }
     }
 }
