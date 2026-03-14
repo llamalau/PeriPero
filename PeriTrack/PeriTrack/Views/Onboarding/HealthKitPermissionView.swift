@@ -11,14 +11,15 @@ struct HealthKitPermissionView: View {
 
             Image(systemName: "heart.circle.fill")
                 .font(.system(size: 80))
-                .foregroundStyle(.red)
+                .foregroundStyle(ColorPalette.coral)
 
             VStack(spacing: 12) {
                 Text("Health Data Access")
-                    .font(.title.weight(.bold))
+                    .font(AppFonts.title)
+                    .foregroundColor(ColorPalette.primaryDark)
 
                 Text("PeriPero reads your health data to detect patterns. Your data stays on your device.")
-                    .font(.body)
+                    .font(AppFonts.body())
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
@@ -35,7 +36,7 @@ struct HealthKitPermissionView: View {
             .padding(.horizontal, 40)
 
             Text("PeriPero only reads data — it never writes to Apple Health.")
-                .font(.caption)
+                .font(AppFonts.caption())
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
@@ -51,7 +52,7 @@ struct HealthKitPermissionView: View {
                         }
                         Text("Allow Health Access")
                     }
-                    .font(.headline)
+                    .font(AppFonts.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(ColorPalette.primary)
@@ -63,12 +64,13 @@ struct HealthKitPermissionView: View {
                 Button("Skip for Now") {
                     onComplete()
                 }
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
                 .foregroundColor(.secondary)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
         }
+        .background(ColorPalette.background)
         .alert("Could not request access", isPresented: $showError) {
             Button("Continue Anyway") { onComplete() }
         } message: {
@@ -81,7 +83,7 @@ struct HealthKitPermissionView: View {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(ColorPalette.primary)
             Text(text)
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
         }
     }
 

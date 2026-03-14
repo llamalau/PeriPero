@@ -10,13 +10,8 @@ struct SymptomDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Summary stats
                 summaryCard
-
-                // Full chart
                 fullChart
-
-                // Data table
                 dataTable
             }
             .padding()
@@ -43,7 +38,7 @@ struct SymptomDetailView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }
@@ -51,14 +46,14 @@ struct SymptomDetailView: View {
     private func statBox(label: String, value: String, unit: String) -> some View {
         VStack(spacing: 4) {
             Text(label)
-                .font(.caption)
+                .font(AppFonts.caption())
                 .foregroundColor(.secondary)
             HStack(spacing: 2) {
                 Text(value)
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .font(AppFonts.bodyBold(size: 18))
                 if !unit.isEmpty {
                     Text(unit)
-                        .font(.caption)
+                        .font(AppFonts.caption())
                         .foregroundColor(.secondary)
                 }
             }
@@ -88,7 +83,7 @@ struct SymptomDetailView: View {
         }
         .frame(height: 200)
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }
@@ -96,23 +91,23 @@ struct SymptomDetailView: View {
     private var dataTable: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Daily Values")
-                .font(.headline)
+                .font(AppFonts.title3)
 
             ForEach(data.suffix(30).reversed()) { point in
                 HStack {
                     Text(point.date.mediumFormatted)
-                        .font(.subheadline)
+                        .font(AppFonts.subheadline)
                         .foregroundColor(.secondary)
                     Spacer()
                     Text("\(String(format: "%.1f", point.value)) \(unit)")
-                        .font(.subheadline.weight(.medium))
+                        .font(AppFonts.bodyBold(size: 14))
                 }
                 .padding(.vertical, 2)
                 Divider()
             }
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }

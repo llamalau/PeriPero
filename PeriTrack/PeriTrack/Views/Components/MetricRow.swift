@@ -5,7 +5,7 @@ struct MetricRow: View {
     let value: String
     let unit: String
     let color: Color
-    let trend: String? // "up", "down", "stable", or nil
+    let trend: String?
 
     init(title: String, value: String, unit: String = "", color: Color = ColorPalette.primary, trend: String? = nil) {
         self.title = title
@@ -22,17 +22,17 @@ struct MetricRow: View {
                 .frame(width: 10, height: 10)
 
             Text(title)
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
                 .foregroundColor(.secondary)
 
             Spacer()
 
             HStack(spacing: 4) {
                 Text(value)
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .font(AppFonts.bodyBold(size: 16))
                 if !unit.isEmpty {
                     Text(unit)
-                        .font(.caption)
+                        .font(AppFonts.caption())
                         .foregroundColor(.secondary)
                 }
                 if let trend = trend {
@@ -55,8 +55,8 @@ struct MetricRow: View {
 
     private func trendColor(_ trend: String) -> Color {
         switch trend {
-        case "up": return .red
-        case "down": return .green
+        case "up": return ColorPalette.coral
+        case "down": return ColorPalette.primary
         default: return .gray
         }
     }

@@ -7,10 +7,10 @@ struct SeveritySliderView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text("Severity")
-                    .font(.subheadline.weight(.medium))
+                    .font(AppFonts.bodyBold(size: 14))
                 Spacer()
                 Text(severityLabel)
-                    .font(.subheadline.weight(.semibold))
+                    .font(AppFonts.bodyBold(size: 14))
                     .foregroundColor(ColorPalette.severityColor(for: severity))
             }
 
@@ -21,11 +21,11 @@ struct SeveritySliderView: View {
 
             HStack {
                 Text("Mild")
-                    .font(.caption2)
+                    .font(AppFonts.caption(size: 11))
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("Severe")
-                    .font(.caption2)
+                    .font(AppFonts.caption(size: 11))
                     .foregroundColor(.secondary)
             }
         }

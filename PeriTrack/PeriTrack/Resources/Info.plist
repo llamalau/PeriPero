@@ -4,5 +4,14 @@
 <dict>
 	<key>NSHealthShareUsageDescription</key>
 	<string>PeriPero reads your health data to detect patterns related to perimenopause symptoms. Your data stays on your device and is never uploaded without your explicit consent.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Fraunces-Variable.ttf</string>
+		<string>Fonts/Fraunces-Italic-Variable.ttf</string>
+		<string>Fonts/AtkinsonHyperlegible-Regular.ttf</string>
+		<string>Fonts/AtkinsonHyperlegible-Bold.ttf</string>
+		<string>Fonts/AtkinsonHyperlegible-Italic.ttf</string>
+		<string>Fonts/AtkinsonHyperlegible-BoldItalic.ttf</string>
+	</array>
 </dict>
 </plist>

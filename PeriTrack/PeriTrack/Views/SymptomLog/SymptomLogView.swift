@@ -8,55 +8,54 @@ struct SymptomLogView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Symptom type picker
-                    symptomPicker
+            ZStack {
+                ColorPalette.background.ignoresSafeArea()
 
-                    // Severity slider
-                    VStack(alignment: .leading, spacing: 12) {
-                        SeveritySliderView(severity: $viewModel.severity)
+                ScrollView {
+                    VStack(spacing: 20) {
+                        symptomPicker
+
+                        VStack(alignment: .leading, spacing: 12) {
+                            SeveritySliderView(severity: $viewModel.severity)
+                        }
+                        .padding()
+                        .background(ColorPalette.cardBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
+                        VStack(spacing: 12) {
+                            DatePicker("Date & Time", selection: $viewModel.selectedDate)
+                                .font(AppFonts.subheadline)
+
+                            TextField("Notes (optional)", text: $viewModel.notes, axis: .vertical)
+                                .font(AppFonts.body())
+                                .lineLimit(3...6)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        .padding()
+                        .background(ColorPalette.cardBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
+                        Button(action: {
+                            viewModel.save(modelContext: modelContext)
+                        }) {
+                            Text("Log Symptom")
+                                .font(AppFonts.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(ColorPalette.primary)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+
+                        if !recentEntries.isEmpty {
+                            recentEntriesSection
+                        }
                     }
                     .padding()
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
-
-                    // Date & Notes
-                    VStack(spacing: 12) {
-                        DatePicker("Date & Time", selection: $viewModel.selectedDate)
-                            .font(.subheadline)
-
-                        TextField("Notes (optional)", text: $viewModel.notes, axis: .vertical)
-                            .lineLimit(3...6)
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
-
-                    // Save button
-                    Button(action: {
-                        viewModel.save(modelContext: modelContext)
-                    }) {
-                        Text("Log Symptom")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(ColorPalette.primary)
-                            .foregroundColor(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                    }
-
-                    // Recent entries
-                    if !recentEntries.isEmpty {
-                        recentEntriesSection
-                    }
                 }
-                .padding()
             }
-            .background(ColorPalette.background)
             .navigationTitle("Log Symptom")
             .alert("Saved", isPresented: $viewModel.showingSaveConfirmation) {
                 Button("OK", role: .cancel) {}
@@ -69,7 +68,7 @@ struct SymptomLogView: View {
     private var symptomPicker: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("What are you experiencing?")
-                .font(.headline)
+                .font(AppFonts.title3)
 
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 130), spacing: 8)
@@ -85,7 +84,7 @@ struct SymptomLogView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }
@@ -93,7 +92,7 @@ struct SymptomLogView: View {
     private var recentEntriesSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Recent Entries")
-                .font(.headline)
+                .font(AppFonts.title3)
 
             ForEach(recentEntries.prefix(10)) { entry in
                 HStack {
@@ -103,23 +102,23 @@ struct SymptomLogView: View {
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(entry.symptomType.rawValue)
-                            .font(.subheadline.weight(.medium))
+                            .font(AppFonts.bodyBold(size: 14))
                         Text(entry.timestamp.mediumFormatted)
-                            .font(.caption)
+                            .font(AppFonts.caption())
                             .foregroundColor(.secondary)
                     }
 
                     Spacer()
 
                     Text("\(Int(entry.severity * 10))/10")
-                        .font(.subheadline.weight(.semibold))
+                        .font(AppFonts.bodyBold(size: 14))
                         .foregroundColor(ColorPalette.severityColor(for: entry.severity))
                 }
                 .padding(.vertical, 4)
             }
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }

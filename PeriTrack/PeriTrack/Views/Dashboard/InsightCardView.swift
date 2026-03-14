@@ -7,27 +7,27 @@ struct InsightCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: iconForCategory(card.category))
-                    .foregroundColor(ColorPalette.primary)
+                    .foregroundColor(ColorPalette.coral)
                     .font(.system(size: 16, weight: .semibold))
                 Text(card.title)
-                    .font(.subheadline.weight(.semibold))
+                    .font(AppFonts.bodyBold(size: 15))
                 Spacer()
                 Text(card.category)
-                    .font(.caption2)
+                    .font(AppFonts.caption(size: 11))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
-                    .background(ColorPalette.primary.opacity(0.1))
-                    .foregroundColor(ColorPalette.primary)
+                    .background(ColorPalette.highlight.opacity(0.3))
+                    .foregroundColor(ColorPalette.primaryDark)
                     .clipShape(Capsule())
             }
 
             Text(card.body)
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
                 .foregroundColor(.secondary)
                 .lineLimit(4)
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }

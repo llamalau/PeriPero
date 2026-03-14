@@ -21,6 +21,7 @@ struct OnboardingContainerView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .background(ColorPalette.background)
     }
 
     private var dataExplanationView: some View {
@@ -33,10 +34,11 @@ struct OnboardingContainerView: View {
 
             VStack(spacing: 12) {
                 Text("Your Data, Your Control")
-                    .font(.title.weight(.bold))
+                    .font(AppFonts.title)
+                    .foregroundColor(ColorPalette.primaryDark)
 
                 Text("PeriPero processes all data locally on your device. Nothing is uploaded to any server without your explicit action.")
-                    .font(.body)
+                    .font(AppFonts.body())
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
@@ -53,7 +55,7 @@ struct OnboardingContainerView: View {
 
             Button(action: { withAnimation { currentPage = 2 } }) {
                 Text("Continue")
-                    .font(.headline)
+                    .font(AppFonts.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(ColorPalette.primary)
@@ -63,6 +65,7 @@ struct OnboardingContainerView: View {
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
         }
+        .background(ColorPalette.background)
     }
 
     private func privacyRow(icon: String, title: String, detail: String) -> some View {
@@ -74,9 +77,9 @@ struct OnboardingContainerView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .font(.headline)
+                    .font(AppFonts.headline)
                 Text(detail)
-                    .font(.subheadline)
+                    .font(AppFonts.subheadline)
                     .foregroundColor(.secondary)
             }
         }

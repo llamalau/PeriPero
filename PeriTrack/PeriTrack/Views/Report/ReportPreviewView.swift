@@ -10,62 +10,62 @@ struct ReportPreviewView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Patient name input
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Patient Name (optional)")
-                            .font(.subheadline.weight(.medium))
-                        TextField("Name for report header", text: $viewModel.patientName)
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+            ZStack {
+                ColorPalette.background.ignoresSafeArea()
 
-                    // Report contents preview
-                    reportContentsPreview
-
-                    // Generate button
-                    Button(action: generateReport) {
-                        HStack {
-                            Image(systemName: "doc.richtext")
-                            Text("Generate PDF Report")
+                ScrollView {
+                    VStack(spacing: 20) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Patient Name (optional)")
+                                .font(AppFonts.bodyBold(size: 14))
+                            TextField("Name for report header", text: $viewModel.patientName)
+                                .font(AppFonts.body())
+                                .textFieldStyle(.roundedBorder)
                         }
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
                         .padding()
-                        .background(ColorPalette.primary)
-                        .foregroundColor(.white)
+                        .background(ColorPalette.cardBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                    }
+                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
 
-                    // Share button (if PDF ready)
-                    if viewModel.pdfData != nil {
-                        Button(action: { showingShareSheet = true }) {
+                        reportContentsPreview
+
+                        Button(action: generateReport) {
                             HStack {
-                                Image(systemName: "square.and.arrow.up")
-                                Text("Share Report")
+                                Image(systemName: "doc.richtext")
+                                Text("Generate PDF Report")
                             }
-                            .font(.headline)
+                            .font(AppFonts.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.green)
+                            .background(ColorPalette.primary)
                             .foregroundColor(.white)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                    }
 
-                    if let error = viewModel.errorMessage {
-                        Text(error)
-                            .font(.caption)
-                            .foregroundColor(.red)
+                        if viewModel.pdfData != nil {
+                            Button(action: { showingShareSheet = true }) {
+                                HStack {
+                                    Image(systemName: "square.and.arrow.up")
+                                    Text("Share Report")
+                                }
+                                .font(AppFonts.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(ColorPalette.highlight)
+                                .foregroundColor(ColorPalette.primaryDark)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                        }
+
+                        if let error = viewModel.errorMessage {
+                            Text(error)
+                                .font(AppFonts.caption())
+                                .foregroundColor(ColorPalette.coral)
+                        }
                     }
+                    .padding()
                 }
-                .padding()
             }
-            .background(ColorPalette.background)
             .navigationTitle("Advocacy Report")
             .overlay {
                 if viewModel.isGenerating {
@@ -83,7 +83,7 @@ struct ReportPreviewView: View {
     private var reportContentsPreview: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Report will include:")
-                .font(.headline)
+                .font(AppFonts.title3)
 
             reportItem(icon: "calendar.circle", title: "Cycle Summary", detail: "\(dashboardVM.cycleLengths.count) cycles detected")
             reportItem(icon: "link", title: "Cross-Symptom Correlations", detail: "\(dashboardVM.correlations.count) significant correlations")
@@ -92,7 +92,7 @@ struct ReportPreviewView: View {
             reportItem(icon: "lightbulb", title: "AI-Generated Insights", detail: "Clinician-ready narrative")
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
     }
@@ -104,9 +104,9 @@ struct ReportPreviewView: View {
                 .frame(width: 24)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.subheadline.weight(.medium))
+                    .font(AppFonts.bodyBold(size: 14))
                 Text(detail)
-                    .font(.caption)
+                    .font(AppFonts.caption())
                     .foregroundColor(.secondary)
             }
             Spacer()

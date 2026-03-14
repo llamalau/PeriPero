@@ -7,16 +7,18 @@ struct WelcomeView: View {
         VStack(spacing: 32) {
             Spacer()
 
-            Image(systemName: "heart.text.clipboard")
+            Image(systemName: "sun.max.fill")
                 .font(.system(size: 80))
-                .foregroundStyle(ColorPalette.primary)
+                .foregroundStyle(ColorPalette.highlight)
 
-            VStack(spacing: 12) {
-                Text("Welcome to PeriPero")
-                    .font(.largeTitle.weight(.bold))
+            VStack(spacing: 16) {
+                Text("Welcome to the\nSummer of your Life")
+                    .font(AppFonts.largeTitle)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(ColorPalette.primaryDark)
 
-                Text("Track, understand, and advocate for your perimenopause health")
-                    .font(.title3)
+                Text("Clarity for your changing body")
+                    .font(AppFonts.body(size: 18))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
@@ -33,7 +35,7 @@ struct WelcomeView: View {
 
             Button(action: onContinue) {
                 Text("Get Started")
-                    .font(.headline)
+                    .font(AppFonts.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(ColorPalette.primary)
@@ -43,6 +45,7 @@ struct WelcomeView: View {
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
         }
+        .background(ColorPalette.background)
     }
 
     private func featureRow(icon: String, title: String, description: String) -> some View {
@@ -54,9 +57,9 @@ struct WelcomeView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .font(.headline)
+                    .font(AppFonts.headline)
                 Text(description)
-                    .font(.subheadline)
+                    .font(AppFonts.subheadline)
                     .foregroundColor(.secondary)
             }
         }

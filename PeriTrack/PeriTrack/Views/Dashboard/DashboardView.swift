@@ -9,6 +9,8 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                ColorPalette.background.ignoresSafeArea()
+
                 ScrollView {
                     VStack(spacing: 16) {
                         // Date range selector
@@ -21,18 +23,13 @@ struct DashboardView: View {
                         .padding(.horizontal)
 
                         if viewModel.hasAnyData {
-                            // Quick metrics
                             quickMetricsCard
-
-                            // Timeline charts
                             timelineSection
 
-                            // AI Insight cards
                             if !viewModel.insightCards.isEmpty {
                                 insightsSection
                             }
 
-                            // Recent symptoms
                             if !symptomEntries.isEmpty {
                                 recentSymptomsSection
                             }
@@ -42,7 +39,6 @@ struct DashboardView: View {
                     }
                     .padding(.bottom, 20)
                 }
-                .background(ColorPalette.background)
 
                 if viewModel.isLoading {
                     LoadingOverlay(message: "Loading health data...")
@@ -82,7 +78,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
         .padding(.horizontal)
@@ -91,7 +87,7 @@ struct DashboardView: View {
     private var timelineSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Timeline")
-                .font(.headline)
+                .font(AppFonts.title3)
                 .padding(.horizontal)
 
             let streams: [(label: String, data: [HealthDataPoint], color: Color)] = [
@@ -111,7 +107,7 @@ struct DashboardView: View {
                 endDate: viewModel.endDate
             )
             .padding()
-            .background(Color.white)
+            .background(ColorPalette.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
             .padding(.horizontal)
@@ -121,7 +117,7 @@ struct DashboardView: View {
     private var insightsSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Insights")
-                .font(.headline)
+                .font(AppFonts.title3)
                 .padding(.horizontal)
 
             ForEach(viewModel.insightCards) { card in
@@ -134,7 +130,7 @@ struct DashboardView: View {
     private var recentSymptomsSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Recent Symptoms")
-                .font(.headline)
+                .font(AppFonts.title3)
                 .padding(.horizontal)
 
             VStack(spacing: 6) {
@@ -144,20 +140,20 @@ struct DashboardView: View {
                             .foregroundColor(entry.symptomType.color)
                             .frame(width: 24)
                         Text(entry.symptomType.rawValue)
-                            .font(.subheadline)
+                            .font(AppFonts.subheadline)
                         Spacer()
                         Text("\(Int(entry.severity * 10))/10")
-                            .font(.caption.weight(.semibold))
+                            .font(AppFonts.captionBold())
                             .foregroundColor(ColorPalette.severityColor(for: entry.severity))
                         Text(entry.timestamp.shortFormatted)
-                            .font(.caption)
+                            .font(AppFonts.caption())
                             .foregroundColor(.secondary)
                     }
                     .padding(.vertical, 2)
                 }
             }
             .padding()
-            .background(Color.white)
+            .background(ColorPalette.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
             .padding(.horizontal)
@@ -166,21 +162,22 @@ struct DashboardView: View {
 
     private var emptyStateView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "heart.text.clipboard")
+            Image(systemName: "sun.max.fill")
                 .font(.system(size: 60))
-                .foregroundColor(ColorPalette.primary.opacity(0.4))
+                .foregroundColor(ColorPalette.highlight)
 
-            Text("No Health Data Available")
-                .font(.title3.weight(.semibold))
+            Text("No Health Data Yet")
+                .font(AppFonts.title2)
+                .foregroundColor(ColorPalette.primaryDark)
 
             Text("PeriPero needs access to your Apple Health data to detect patterns. Make sure you've granted permission in Settings > Privacy & Security > Health > PeriPero.")
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
             Text("You can also start logging symptoms manually using the Log tab below.")
-                .font(.subheadline)
+                .font(AppFonts.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)

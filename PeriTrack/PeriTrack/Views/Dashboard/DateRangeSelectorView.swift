@@ -34,7 +34,7 @@ struct DateRangeSelectorView: View {
                         onRangeChanged()
                     }) {
                         Text(preset.rawValue)
-                            .font(.system(size: 14, weight: selectedPreset == preset ? .bold : .medium))
+                            .font(AppFonts.bodyBold(size: 14))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)
                             .background(selectedPreset == preset ? ColorPalette.primary : Color.clear)
@@ -47,15 +47,15 @@ struct DateRangeSelectorView: View {
 
             HStack {
                 Text(startDate.shortFormatted)
-                    .font(.caption)
+                    .font(AppFonts.caption())
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("to")
-                    .font(.caption)
+                    .font(AppFonts.caption())
                     .foregroundColor(.secondary)
                 Spacer()
                 Text(endDate.shortFormatted)
-                    .font(.caption)
+                    .font(AppFonts.caption())
                     .foregroundColor(.secondary)
             }
         }

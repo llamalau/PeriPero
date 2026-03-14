@@ -11,11 +11,11 @@ struct SymptomBadge: View {
                 Image(systemName: symptomType.icon)
                     .font(.system(size: 14))
                 Text(symptomType.rawValue)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(AppFonts.caption(size: 13))
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(isSelected ? symptomType.color.opacity(0.2) : Color.gray.opacity(0.08))
+            .background(isSelected ? symptomType.color.opacity(0.2) : ColorPalette.background)
             .foregroundColor(isSelected ? symptomType.color : .secondary)
             .clipShape(Capsule())
             .overlay(
