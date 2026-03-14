@@ -1,0 +1,127 @@
+import SwiftUI
+import SwiftData
+
+struct ReportPreviewView: View {
+    @StateObject private var viewModel = ReportViewModel()
+    @ObservedObject var dashboardVM: DashboardViewModel
+    @ObservedObject var healthKitManager = HealthKitManager.shared
+    @Query(sort: \SymptomEntry.timestamp) private var symptomEntries: [SymptomEntry]
+    @State private var showingShareSheet = false
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Patient name input
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Patient Name (optional)")
+                            .font(.subheadline.weight(.medium))
+                        TextField("Name for report header", text: $viewModel.patientName)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
+                    // Report contents preview
+                    reportContentsPreview
+
+                    // Generate button
+                    Button(action: generateReport) {
+                        HStack {
+                            Image(systemName: "doc.richtext")
+                            Text("Generate PDF Report")
+                        }
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(ColorPalette.primary)
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+
+                    // Share button (if PDF ready)
+                    if viewModel.pdfData != nil {
+                        Button(action: { showingShareSheet = true }) {
+                            HStack {
+                                Image(systemName: "square.and.arrow.up")
+                                Text("Share Report")
+                            }
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                    }
+
+                    if let error = viewModel.errorMessage {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
+                .padding()
+            }
+            .background(ColorPalette.background)
+            .navigationTitle("Advocacy Report")
+            .overlay {
+                if viewModel.isGenerating {
+                    LoadingOverlay(message: "Generating report...")
+                }
+            }
+            .sheet(isPresented: $showingShareSheet) {
+                if let data = viewModel.pdfData {
+                    ReportShareView(pdfData: data)
+                }
+            }
+        }
+    }
+
+    private var reportContentsPreview: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Report will include:")
+                .font(.headline)
+
+            reportItem(icon: "calendar.circle", title: "Cycle Summary", detail: "\(dashboardVM.cycleLengths.count) cycles detected")
+            reportItem(icon: "link", title: "Cross-Symptom Correlations", detail: "\(dashboardVM.correlations.count) significant correlations")
+            reportItem(icon: "list.bullet.clipboard", title: "Symptom Log", detail: "\(symptomEntries.count) entries")
+            reportItem(icon: "chart.xyaxis.line", title: "Timeline Visualization", detail: "Multi-track health data")
+            reportItem(icon: "lightbulb", title: "AI-Generated Insights", detail: "Clinician-ready narrative")
+        }
+        .padding()
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    }
+
+    private func reportItem(icon: String, title: String, detail: String) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .foregroundColor(ColorPalette.primary)
+                .frame(width: 24)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline.weight(.medium))
+                Text(detail)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+    }
+
+    private func generateReport() {
+        Task {
+            await viewModel.generateReport(
+                correlations: dashboardVM.correlations,
+                cycleLengths: dashboardVM.cycleLengths,
+                symptomEntries: symptomEntries,
+                intermenstrualBleedingCount: healthKitManager.intermenstrualBleedingData.count,
+                dateRange: "\(dashboardVM.startDate.mediumFormatted) – \(dashboardVM.endDate.mediumFormatted)"
+            )
+        }
+    }
+}

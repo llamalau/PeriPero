@@ -1,0 +1,119 @@
+import SwiftUI
+import Charts
+
+struct SymptomDetailView: View {
+    let title: String
+    let data: [HealthDataPoint]
+    let color: Color
+    let unit: String
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                // Summary stats
+                summaryCard
+
+                // Full chart
+                fullChart
+
+                // Data table
+                dataTable
+            }
+            .padding()
+        }
+        .background(ColorPalette.background)
+        .navigationTitle(title)
+    }
+
+    private var summaryCard: some View {
+        let values = data.map(\.value)
+        let avg = values.isEmpty ? 0 : values.reduce(0, +) / Double(values.count)
+        let min = values.min() ?? 0
+        let max = values.max() ?? 0
+
+        return VStack(spacing: 12) {
+            HStack {
+                statBox(label: "Average", value: String(format: "%.1f", avg), unit: unit)
+                Spacer()
+                statBox(label: "Min", value: String(format: "%.1f", min), unit: unit)
+                Spacer()
+                statBox(label: "Max", value: String(format: "%.1f", max), unit: unit)
+                Spacer()
+                statBox(label: "Points", value: "\(data.count)", unit: "")
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    }
+
+    private func statBox(label: String, value: String, unit: String) -> some View {
+        VStack(spacing: 4) {
+            Text(label)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            HStack(spacing: 2) {
+                Text(value)
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                if !unit.isEmpty {
+                    Text(unit)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+    }
+
+    private var fullChart: some View {
+        Chart(data) { point in
+            LineMark(
+                x: .value("Date", point.date),
+                y: .value(title, point.value)
+            )
+            .foregroundStyle(color)
+            .lineStyle(StrokeStyle(lineWidth: 2))
+
+            AreaMark(
+                x: .value("Date", point.date),
+                y: .value(title, point.value)
+            )
+            .foregroundStyle(color.opacity(0.1))
+        }
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 7)) { _ in
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.month(.abbreviated).day())
+            }
+        }
+        .frame(height: 200)
+        .padding()
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    }
+
+    private var dataTable: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Daily Values")
+                .font(.headline)
+
+            ForEach(data.suffix(30).reversed()) { point in
+                HStack {
+                    Text(point.date.mediumFormatted)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("\(String(format: "%.1f", point.value)) \(unit)")
+                        .font(.subheadline.weight(.medium))
+                }
+                .padding(.vertical, 2)
+                Divider()
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    }
+}
