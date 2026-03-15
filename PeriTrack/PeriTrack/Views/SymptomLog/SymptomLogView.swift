@@ -21,7 +21,7 @@ struct SymptomLogView: View {
                         .padding()
                         .background(ColorPalette.cardBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+                
 
                         VStack(spacing: 12) {
                             DatePicker("Date & Time", selection: $viewModel.selectedDate)
@@ -35,7 +35,7 @@ struct SymptomLogView: View {
                         .padding()
                         .background(ColorPalette.cardBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+                
 
                         Button(action: {
                             viewModel.save(modelContext: modelContext)
@@ -86,7 +86,7 @@ struct SymptomLogView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 
     private var recentEntriesSection: some View {
@@ -105,7 +105,7 @@ struct SymptomLogView: View {
                             .font(AppFonts.bodyBold(size: 14))
                         Text(entry.timestamp.mediumFormatted)
                             .font(AppFonts.caption())
-                            .foregroundColor(.secondary)
+                            .foregroundColor(ColorPalette.textSecondary)
                     }
 
                     Spacer()
@@ -120,6 +120,6 @@ struct SymptomLogView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 }

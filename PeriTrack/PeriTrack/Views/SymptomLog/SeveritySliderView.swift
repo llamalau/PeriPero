@@ -22,11 +22,11 @@ struct SeveritySliderView: View {
             HStack {
                 Text("Mild")
                     .font(AppFonts.caption(size: 11))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
                 Spacer()
                 Text("Severe")
                     .font(AppFonts.caption(size: 11))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
             }
         }
     }

@@ -25,12 +25,12 @@ struct TimelineChartView: View {
                     .frame(width: 8, height: 8)
                 Text(label)
                     .font(.caption.weight(.medium))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
                 Spacer()
                 if let last = data.last {
                     Text("\(String(format: "%.1f", last.value)) \(last.category.unit)")
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(ColorPalette.textSecondary)
                 }
             }
 

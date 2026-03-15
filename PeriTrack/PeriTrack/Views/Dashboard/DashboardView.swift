@@ -80,7 +80,7 @@ struct DashboardView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
         .padding(.horizontal)
     }
 
@@ -109,7 +109,7 @@ struct DashboardView: View {
             .padding()
             .background(ColorPalette.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    
             .padding(.horizontal)
         }
     }
@@ -147,7 +147,7 @@ struct DashboardView: View {
                             .foregroundColor(ColorPalette.severityColor(for: entry.severity))
                         Text(entry.timestamp.shortFormatted)
                             .font(AppFonts.caption())
-                            .foregroundColor(.secondary)
+                            .foregroundColor(ColorPalette.textSecondary)
                     }
                     .padding(.vertical, 2)
                 }
@@ -155,7 +155,7 @@ struct DashboardView: View {
             .padding()
             .background(ColorPalette.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+    
             .padding(.horizontal)
         }
     }
@@ -168,17 +168,17 @@ struct DashboardView: View {
 
             Text("No Health Data Yet")
                 .font(AppFonts.title2)
-                .foregroundColor(ColorPalette.primaryDark)
+                .foregroundColor(ColorPalette.textPrimary)
 
             Text("PeriPero needs access to your Apple Health data to detect patterns. Make sure you've granted permission in Settings > Privacy & Security > Health > PeriPero.")
                 .font(AppFonts.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
             Text("You can also start logging symptoms manually using the Log tab below.")
                 .font(AppFonts.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
         }

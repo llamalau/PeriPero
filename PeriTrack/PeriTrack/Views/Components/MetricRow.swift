@@ -23,7 +23,7 @@ struct MetricRow: View {
 
             Text(title)
                 .font(AppFonts.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
 
             Spacer()
 
@@ -33,7 +33,7 @@ struct MetricRow: View {
                 if !unit.isEmpty {
                     Text(unit)
                         .font(AppFonts.caption())
-                        .foregroundColor(.secondary)
+                        .foregroundColor(ColorPalette.textSecondary)
                 }
                 if let trend = trend {
                     Image(systemName: trendIcon(trend))

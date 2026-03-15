@@ -14,11 +14,11 @@ struct HealthKitPermissionView: View {
             VStack(spacing: 12) {
                 Text("You're All Set")
                     .font(AppFonts.title)
-                    .foregroundColor(ColorPalette.primaryDark)
+                    .foregroundColor(ColorPalette.textPrimary)
 
                 Text("PeriPero is loaded with sample health data so you can explore the full experience right away.")
                     .font(AppFonts.body())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -33,7 +33,7 @@ struct HealthKitPermissionView: View {
 
             Text("With a paid Apple Developer account, PeriPero can connect to real Apple Health data.")
                 .font(AppFonts.caption())
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 

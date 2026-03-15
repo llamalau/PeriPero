@@ -40,21 +40,21 @@ struct SymptomDetailView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 
     private func statBox(label: String, value: String, unit: String) -> some View {
         VStack(spacing: 4) {
             Text(label)
                 .font(AppFonts.caption())
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
             HStack(spacing: 2) {
                 Text(value)
                     .font(AppFonts.bodyBold(size: 18))
                 if !unit.isEmpty {
                     Text(unit)
                         .font(AppFonts.caption())
-                        .foregroundColor(.secondary)
+                        .foregroundColor(ColorPalette.textSecondary)
                 }
             }
         }
@@ -85,7 +85,7 @@ struct SymptomDetailView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 
     private var dataTable: some View {
@@ -97,7 +97,7 @@ struct SymptomDetailView: View {
                 HStack {
                     Text(point.date.mediumFormatted)
                         .font(AppFonts.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(ColorPalette.textSecondary)
                     Spacer()
                     Text("\(String(format: "%.1f", point.value)) \(unit)")
                         .font(AppFonts.bodyBold(size: 14))
@@ -109,6 +109,6 @@ struct SymptomDetailView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 }

@@ -15,11 +15,11 @@ struct WelcomeView: View {
                 Text("Welcome to the\nSummer of your Life")
                     .font(AppFonts.largeTitle)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.primaryDark)
+                    .foregroundColor(ColorPalette.textPrimary)
 
                 Text("Clarity for your changing body")
                     .font(AppFonts.body(size: 18))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
             }
@@ -60,7 +60,7 @@ struct WelcomeView: View {
                     .font(AppFonts.headline)
                 Text(description)
                     .font(AppFonts.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
             }
         }
     }

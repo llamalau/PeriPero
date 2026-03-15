@@ -14,7 +14,7 @@ struct LoadingOverlay: View {
                     .tint(ColorPalette.primary)
                 Text(message)
                     .font(AppFonts.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
             }
             .padding(32)
             .background(.ultraThinMaterial)

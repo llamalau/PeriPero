@@ -25,7 +25,7 @@ struct ReportPreviewView: View {
                         .padding()
                         .background(ColorPalette.cardBackground)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+                
 
                         reportContentsPreview
 
@@ -52,7 +52,7 @@ struct ReportPreviewView: View {
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(ColorPalette.highlight)
-                                .foregroundColor(ColorPalette.primaryDark)
+                                .foregroundColor(ColorPalette.textPrimary)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
                         }
@@ -94,7 +94,7 @@ struct ReportPreviewView: View {
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 
     private func reportItem(icon: String, title: String, detail: String) -> some View {
@@ -107,7 +107,7 @@ struct ReportPreviewView: View {
                     .font(AppFonts.bodyBold(size: 14))
                 Text(detail)
                     .font(AppFonts.caption())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
             }
             Spacer()
         }

@@ -17,19 +17,19 @@ struct InsightCardView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(ColorPalette.highlight.opacity(0.3))
-                    .foregroundColor(ColorPalette.primaryDark)
+                    .foregroundColor(ColorPalette.textPrimary)
                     .clipShape(Capsule())
             }
 
             Text(card.body)
                 .font(AppFonts.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ColorPalette.textSecondary)
                 .lineLimit(4)
         }
         .padding()
         .background(ColorPalette.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: ColorPalette.cardShadow, radius: 4, y: 2)
+
     }
 
     private func iconForCategory(_ category: String) -> String {

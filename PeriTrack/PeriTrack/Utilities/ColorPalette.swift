@@ -6,6 +6,10 @@ enum ColorPalette {
     static let cardBackground = Color.white
     static let cardShadow = Color.black.opacity(0.06)
 
+    // Text colors
+    static let textPrimary = Color(red: 0x2D/255, green: 0x2D/255, blue: 0x2D/255)     // #2D2D2D near-black
+    static let textSecondary = Color(red: 0x5A/255, green: 0x5A/255, blue: 0x5A/255)   // #5A5A5A medium-dark grey
+
     // Primary Buttons — Pacific Cyan #3A8695
     static let primary = Color(red: 0x3A/255, green: 0x86/255, blue: 0x95/255)
     static let primaryLight = Color(red: 0x3A/255, green: 0x86/255, blue: 0x95/255).opacity(0.7)

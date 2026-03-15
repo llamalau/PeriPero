@@ -16,7 +16,7 @@ struct SymptomBadge: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(isSelected ? symptomType.color.opacity(0.2) : ColorPalette.background)
-            .foregroundColor(isSelected ? symptomType.color : .secondary)
+            .foregroundColor(isSelected ? symptomType.color : ColorPalette.textSecondary)
             .clipShape(Capsule())
             .overlay(
                 Capsule()

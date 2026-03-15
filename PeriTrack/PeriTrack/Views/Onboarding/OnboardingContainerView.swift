@@ -35,11 +35,11 @@ struct OnboardingContainerView: View {
             VStack(spacing: 12) {
                 Text("Your Data, Your Control")
                     .font(AppFonts.title)
-                    .foregroundColor(ColorPalette.primaryDark)
+                    .foregroundColor(ColorPalette.textPrimary)
 
                 Text("PeriPero processes all data locally on your device. Nothing is uploaded to any server without your explicit action.")
                     .font(AppFonts.body())
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -80,7 +80,7 @@ struct OnboardingContainerView: View {
                     .font(AppFonts.headline)
                 Text(detail)
                     .font(AppFonts.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ColorPalette.textSecondary)
             }
         }
     }
